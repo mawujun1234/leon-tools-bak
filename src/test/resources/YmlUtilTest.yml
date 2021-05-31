@@ -1,0 +1,32 @@
+logging:
+  config: classpath:log4j2.xml
+#服务器端口
+server:
+  port: 8100
+spring:
+  profiles:
+    active: dev
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+      routes:
+        - id: leon-cloud-auth
+          uri: lb://leon-cloud-auth
+          predicates:
+            - Path=/auth/**
+        - id: leon-cloud-base
+          uri: lb://leon-cloud-base
+          predicates:
+            - Path=/base/**
+        - id: leon-cloud-oss
+          uri: lb://leon-cloud-oss
+          predicates:
+            - Path=/oss/**
+
+
+
+
